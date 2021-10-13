@@ -88,24 +88,45 @@ plaintext = plaintext.replace('\n', '')
 key = key.replace('\n', '')
 action = action.replace('\n', '')
 
-
-subkey1, subkey2 = subkeys(key)
-# initial permutation
-permuted_text = permutation(plaintext, (1,5,2,0,3,7,4,6))
-# mixing
-right_half = permuted_text[:4]
-left_half = permuted_text[4:]
-new_half1 = feistel(left_half, subkey1)
-new_half1 = xor(new_half1, right_half)
-# interchange
-text_interchanged = left_half + new_half1
-# mixing
-right_half = text_interchanged[4:]
-left_half = text_interchanged[:4]
-new_half2 = feistel(right_half, subkey2)
-new_half2 = xor(new_half2, left_half)
-# concatenate
-result = new_half2 + new_half1
-# reverse permutation
-result = permutation(result, (3,0,2,4,6,1,7,5))
-print(result)
+if action == 'E':
+  subkey1, subkey2 = subkeys(key)
+  # initial permutation
+  permuted_text = permutation(plaintext, (1,5,2,0,3,7,4,6))
+  # mixing
+  right_half = permuted_text[:4]
+  left_half = permuted_text[4:]
+  new_half1 = feistel(left_half, subkey1)
+  new_half1 = xor(new_half1, right_half)
+  # interchange
+  text_interchanged = left_half + new_half1
+  # mixing
+  right_half = text_interchanged[4:]
+  left_half = text_interchanged[:4]
+  new_half2 = feistel(right_half, subkey2)
+  new_half2 = xor(new_half2, left_half)
+  # concatenate
+  result = new_half2 + new_half1
+  # reverse permutation
+  result = permutation(result, (3,0,2,4,6,1,7,5))
+  print(result)
+else:
+  subkey1, subkey2 = subkeys(key)
+  # initial permutation
+  permuted_text = permutation(plaintext, (1,5,2,0,3,7,4,6))
+  # mixing
+  right_half = permuted_text[:4]
+  left_half = permuted_text[4:]
+  new_half1 = feistel(left_half, subkey2)
+  new_half1 = xor(new_half1, right_half)
+  # interchange
+  text_interchanged = left_half + new_half1
+  # mixing
+  right_half = text_interchanged[4:]
+  left_half = text_interchanged[:4]
+  new_half2 = feistel(right_half, subkey1)
+  new_half2 = xor(new_half2, left_half)
+  # concatenate
+  result = new_half2 + new_half1
+  # reverse permutation
+  result = permutation(result, (3,0,2,4,6,1,7,5))
+  print(result)
